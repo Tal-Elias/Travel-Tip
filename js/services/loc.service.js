@@ -32,14 +32,16 @@ function getLocs() {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve(gLocs)
-        }, 2000)
+        }, 1000)
     })
 }
 
 function removeLocation(id) {
-    const locationIdx = gLocs.findIndex(loc => id === loc.id)
-    gLocs.splice(locationIdx, 1)
-    _saveLocsToStorage()
+    return new Promise((res, rej) => {
+        const locationIdx = gLocs.findIndex(loc => id === loc.id)
+        gLocs.splice(locationIdx, 1)
+        _saveLocsToStorage()
+    })
 }
 
 function _saveLocsToStorage() {

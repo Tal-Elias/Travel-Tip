@@ -7,7 +7,7 @@ window.onPanTo = onPanTo
 window.onGetLocs = onGetLocs
 window.onGetUserPos = onGetUserPos
 window.onRemoveLocation = onRemoveLocation
-window.onSearch= onSearch
+window.onSearch = onSearch
 
 function onInit() {
     mapService.initMap()
@@ -68,32 +68,33 @@ function onGetLocs() {
 }
 
 //search location
-function onSearch(ev){
-    if(ev) ev.preventDefault()
+function onSearch(ev) {
+    if (ev) ev.preventDefault()
     const elInputSearch = document.querySelector('input[name=search]')
     mapService.getAddressBySearchInput(elInputSearch.value).then(
-        res=> {const {lat,lng}=res
-        onPanTo(lat,lng)
-    }
+        res => {
+            const { lat, lng } = res
+            onPanTo(lat, lng)
+        }
     )
     // codeAddress(elInputSearch.value)
 
 }
 
 function codeAddress(addressValue) {
-    const address =addressValue
-    geocoder.geocode( { 'address': address}, function(results, status) {
-      if (status == 'OK') {
-        map.setCenter(results[0].geometry.location);
-        var marker = new google.maps.Marker({
-            map: map,
-            position: results[0].geometry.location
-        })
-      } else {
-        alert('Geocode was not successful for the following reason: ' + status);
-      }
+    const address = addressValue
+    geocoder.geocode({ 'address': address }, function (results, status) {
+        if (status == 'OK') {
+            map.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location
+            })
+        } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+        }
     });
-  }
+}
 function renderLocs(locs) {
     const strHTMLs = locs.map(loc => `
                 <article>
@@ -124,7 +125,22 @@ function onPanTo(lat, lng) {
 }
 
 function onRemoveLocation(id) {
-    // console.log('id is:', id);
-    locService.removeLocation(id)
-    onGetLocs()
+    const prmUserDecision = Swal.fire({
+        title: 'Delete Location??',
+        showDenyButton: true,
+    })
+
+    prmUserDecision.then((userDecision) => {
+        if (userDecision.value) {
+            locService.removeLocation(id)
+            onGetLocs()
+            setTimeout(() => {
+                Swal.fire('Deleted!')
+            }, 1000)
+        } else {
+            setTimeout(() => {
+                Swal.fire('Cancelling...')
+            }, 1000)
+        }
+    })
 }
