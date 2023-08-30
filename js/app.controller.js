@@ -1,6 +1,6 @@
 import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
-
+import {weatherService} from './services/weather.service.js'
 window.onload = onInit
 window.onAddMarker = onAddMarker
 window.onPanTo = onPanTo
@@ -18,6 +18,19 @@ function onInit() {
             console.log('Map is ready')
             const map = mapService.getMap()
             getInfoWindow(map)
+            weatherService.getWeatherByAddress(loc).then(res=>{
+                const weather=res
+                console.log(weather);
+                document.querySelector('.weather').innerHTML=`
+                <article class='weather'>
+                <h2>weather today</h2>
+                <h3>${weather.weather[0].main}</h3>
+                <h4>${weather.name}</h4>
+                <p> Temp:${weather.main.temp+'</p> <p> wind speed:'+ weather.wind.speed}</p>
+            </article>
+                `
+            })
+        
         })
         .catch((err) => console.log(err, 'Error: cannot init map'))
 }
@@ -79,6 +92,19 @@ function onSearch(ev) {
             const { lat, lng } = res
             onPanTo(lat, lng)
             locService.setCurrPosition({ lat, lng })
+
+            weatherService.getWeatherByAddress({lat,lng}).then(res=>{
+                const weather=res
+                console.log(weather);
+                document.querySelector('.weather').innerHTML=`
+                <article class='weather'>
+                <h2>weather today</h2>
+                <h3>${weather.weather[0].main}</h3>
+                <h4>${weather.name}</h4>
+                <p> Temp:${weather.main.temp+'</p> <p> wind speed:'+ weather.wind.speed}</p>
+            </article>
+                `
+            })
         }
     )
 }
@@ -156,4 +182,10 @@ function onFilterByQueryParams() {
     if (filterBy.lat && filterBy.lng) return filterBy
     else return
     // return onPanTo(filterBy.lat, filterBy.lng)
+}
+
+function weatherIcon(type){
+if(type.toLowerCase()==='cloud') return '☁'
+if(type.toLowerCase()==='clear') return '🌞'
+if(type.toLowerCase()==='rain') return '🌧'
 }

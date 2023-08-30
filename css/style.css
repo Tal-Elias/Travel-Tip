@@ -37,13 +37,14 @@ form {
 }
 
 .main-container {
-    /* background-color: aqua; */
+    background-color: lightgray;
 }
 
 .map-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     /* background-color: blueviolet; */
+    justify-items: center;
 }
 
 .buttons-container {
@@ -103,4 +104,16 @@ form {
 
 button:hover {
     background-color: #2980b9;
+}
+.weather{
+    background-color: rgb(234, 234, 234);
+    text-align: center;
+    
+   
+}
+.weather-card{
+   padding: 10px;
+    border: 2px black ridge;
+   
+    
 }
