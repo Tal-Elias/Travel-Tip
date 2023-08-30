@@ -3,12 +3,13 @@ import { utilService } from '../services/util.service.js'
 
 export const locService = {
     getLocs,
-    createLocation
+    createLocation,
+    removeLocation
 }
 
 const STORAGE_KEY = 'locationsDB'
 
-const locs = storageService.loadFromStorage(STORAGE_KEY) || [
+const gLocs = storageService.loadFromStorage(STORAGE_KEY) || [
     { name: 'Greatplace', lat: 32.047104, lng: 34.832384 },
     { name: 'Neveragain', lat: 32.047201, lng: 34.832581 }
 ]
@@ -23,20 +24,26 @@ function createLocation(name, position) {
         createdAt: Date.now(),
         updatedAt: Date.now()
     }
-    locs.push(location)
-    storageService.saveToStorage(STORAGE_KEY, locs)
+    gLocs.push(location)
+    _saveLocsToStorage()
 }
 
 function getLocs() {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            resolve(locs)
+            resolve(gLocs)
         }, 2000)
     })
 }
 
-function removeLocation() {
-    
+function removeLocation(id) {
+    const locationIdx = gLocs.findIndex(loc => id === loc.id)
+    gLocs.splice(locationIdx, 1)
+    _saveLocsToStorage()
+}
+
+function _saveLocsToStorage() {
+    storageService.saveToStorage(STORAGE_KEY, gLocs)
 }
 
 
