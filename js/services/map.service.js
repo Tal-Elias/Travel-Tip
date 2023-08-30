@@ -1,3 +1,5 @@
+import { storageService } from "../services/storage.service.js"
+
 export const mapService = {
     initMap,
     addMarker,
@@ -21,6 +23,13 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             })
         })
 }
+
+// function getAdress(adress){
+// const locs =storageService.loadFromStorage('locationsDB') ||{}
+// if(locs[adress]) return Promise.resolve(locs[adress]) 
+// console.log('Getting from Network')
+// return axios.get('')
+// }
 
 function getMap(){
     return gMap
