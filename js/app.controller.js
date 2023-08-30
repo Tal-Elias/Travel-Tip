@@ -6,6 +6,7 @@ window.onAddMarker = onAddMarker
 window.onPanTo = onPanTo
 window.onGetLocs = onGetLocs
 window.onGetUserPos = onGetUserPos
+window.onRemoveLocation = onRemoveLocation
 
 function onInit() {
     mapService.initMap()
@@ -62,11 +63,7 @@ function onAddMarker() {
 
 function onGetLocs() {
     locService.getLocs()
-        .then(locs => {
-            console.log('Locations:', locs)
-            // document.querySelector('.locs').innerText = JSON.stringify(locs, null, 2)
-            renderLocs(locs)
-        })
+        .then(renderLocs)
 }
 
 //search location
@@ -92,12 +89,11 @@ function codeAddress(addressValue) {
     });
   }
 function renderLocs(locs) {
-    console.log(locs);
     const strHTMLs = locs.map(loc => `
                 <article>
                     <h3>${loc.name}</h3>
                     <button onclick="onPanTo(${loc.lat, loc.lng})">Go</button>
-                    <button onclick="onRemoveLocation(${loc.id})">Delete</button>
+                    <button onclick="onRemoveLocation('${loc.id}')">Delete</button>
                 </article>
         `)
     document.querySelector('.card-container').innerHTML = strHTMLs.join('')
@@ -106,6 +102,7 @@ function renderLocs(locs) {
 function onGetUserPos() {
     getPosition()
         .then(pos => {
+            onPanTo(pos.coords.latitude, pos.coords.longitude)
             console.log('User position is:', pos.coords)
             document.querySelector('.user-pos').innerText =
                 `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
@@ -121,5 +118,6 @@ function onPanTo(lat, lng) {
 }
 
 function onRemoveLocation(id) {
-
+    // console.log('id is:', id);
+    locService.removeLocation(id)
 }
