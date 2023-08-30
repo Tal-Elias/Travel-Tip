@@ -25,7 +25,7 @@ header {
 
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    background-color: rgb(255, 249, 205);
+    background-color: rgb(151 255 158);
 }
 
 h1 {
@@ -57,7 +57,7 @@ form {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: rgb(255, 249, 205);
+    background-color: rgb(151 255 158);
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
@@ -80,7 +80,7 @@ form {
 
 .buttons-container {
     padding: 2em;
-    background-color: rgb(255, 249, 205);
+    background-color: rgb(151 255 158);
 }
 
 .buttons-container button {
