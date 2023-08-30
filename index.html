@@ -1,39 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <title>TravelTip</title>
 </head>
-<body>
-    
-    <h1>TravelTip Starter</h1> 
-    <form onsubmit="onSearch(event)">
-        <input type="search" name="search" placeholder="Search a location..." >
-        <button>🔍</button>
-    </form>
-    <div id="map" style="width: 100%; height: 400px;"></div>
-    <button onclick="onAddMarker()" class="btn-add-marker">Add Marker Speific Location</button>
-    <button onclick="onGetUserPos()" class="btn-user-pos">Get User Position</button>
-    <button onclick="onGetLocs()" class="btn-get-locs">Get Locations</button>
-    <button onclick="onPanTo(35.6895, 139.6917)"class="btn-pan">Pan Map to Tokyo</button>
-    <button onclick="onCreateLink()" class="btn-link">Copy link</button>
 
-    <p>You are at: <span class="user-pos"></span></p>
-    <section class="card-container">
-        Locations: 
-            <pre class="locs"></pre>
-            <!-- <article>
-                <h3></h3>
-                <button>Go</button>
-                <button>Delete</button>
-            </article> -->
+<body>
+
+    <header>
+        <h1>TravelTip Starter</h1>
+        <form onsubmit="onSearch(event)">
+            <input type="search" name="search" placeholder="Search a location...">
+            <button>🔍</button>
+        </form>
+    </header>
+
+    <section class="main-container">
+        <div class="map-container">
+            <div id="map" style="width: 100%; height: 400px;"></div>
+            <div class="weather"></div>
+        </div>
+        <div class="buttons">
+            <button onclick="onAddMarker()" class="btn-add-marker">Add Marker Speific Location</button>
+            <button onclick="onGetUserPos()" class="btn-user-pos">Get User Position</button>
+            <button onclick="onGetLocs()" class="btn-get-locs">Get Locations</button>
+            <button onclick="onPanTo(35.6895, 139.6917)" class="btn-pan">Pan Map to Tokyo</button>
+            <button onclick="onCreateLink()" class="btn-link">Copy link</button>
+        </div>
     </section>
-    
-    
+
+    <section class="card-container"></section>
+
     <script src="lib/swal.js"></script>
     <script src="lib/axios.js"></script>
     <script type="module" src="js/app.controller.js"></script>
 </body>
+
 </html>
