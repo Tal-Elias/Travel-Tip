@@ -32,9 +32,10 @@ function getInfoWindow(map){
   map.addListener("click", (mapsMouseEvent) => {
     //add location name
     const locationName= prompt('whats the location name?')
-    // if(!locationName){
-    //     createLocation(locationName,mapsMouseEvent.latLng)
-    // }
+    if(locationName){
+        console.log(locationName);
+        createLocation(locationName,mapsMouseEvent.latLng)
+    }
     // Close the current InfoWindow.
     infoWindow.close();
     // Create a new InfoWindow.

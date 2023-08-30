@@ -11,7 +11,7 @@ function createLocation(name,position){
     const loc={id:makeId(),
         name,
         lat:position.lat,
-        lat:position.lng,
+        lng:position.lng,
         Weather:weather,
         createdAt:Date.now(),
         updatedAt:Date.now()
