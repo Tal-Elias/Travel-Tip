@@ -84,13 +84,13 @@ function onSearch(ev) {
 }
 
 function renderLocs(locs) {
-    const strHTMLs = locs.map(loc => `
+    console.log(locs);
+    const strHTMLs = locs.map(({ name, id, lat, lng }) => `
                 <article>
-                    <h3>${loc.name}</h3>
-                    <button onclick="onPanTo(${loc.lat, loc.lng})">Go</button>
-                    <button onclick="onRemoveLocation('${loc.id}')">Delete</button>
-                </article>
-        `)
+                    <h3>${name}</h3>
+                    <button onclick="onPanTo(${lat}, ${lng})">Go</button>
+                    <button onclick="onRemoveLocation('${id}')">Delete</button>
+                </article>`)
     document.querySelector('.card-container').innerHTML = strHTMLs.join('')
 }
 
@@ -106,6 +106,7 @@ function onGetUserPos() {
             console.log('err!!!', err)
         })
 }
+
 function onPanTo(lat, lng) {
     console.log('Panning the Map')
     // mapService.panTo(35.6895, 139.6917)
@@ -139,7 +140,6 @@ function onGetCurrPosition() {
 
 function onCreateLink() {
     const currPos = onGetCurrPosition()
-    console.log('currPos:', currPos);
     const queryParams = `?lat=${currPos.lat}&lng=${currPos.lng}`
     const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + queryParams
     navigator.clipboard.writeText(newUrl)
@@ -148,12 +148,9 @@ function onCreateLink() {
 
 function onFilterByQueryParams() {
     const queryParams = new URLSearchParams(window.location.search)
-    console.log(queryParams);
     const filterBy = {
         lat: +queryParams.get('lat'),
         lng: +queryParams.get('lng')
     }
     if (filterBy.lat && filterBy.lng) return filterBy
-    else return
-    // return onPanTo(filterBy.lat, filterBy.lng)
 }

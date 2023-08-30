@@ -55,12 +55,6 @@ function getCurrPosition() {
     return gCurrPosition
 }
 
-// function createLink() {
-//     return new Promise((res, rej) => {
-//         let link = 
-//     })
-// }
-
 function _saveLocsToStorage() {
     storageService.saveToStorage(STORAGE_KEY, gLocs)
 }
