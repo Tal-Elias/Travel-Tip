@@ -1,4 +1,5 @@
 import { storageService } from './storage.service'
+import { utilService } from './util.storage'
 
 export const locService = {
     getLocs
