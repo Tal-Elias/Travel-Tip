@@ -7,6 +7,7 @@ window.onPanTo = onPanTo
 window.onGetLocs = onGetLocs
 window.onGetUserPos = onGetUserPos
 window.onRemoveLocation = onRemoveLocation
+window.onSearch= onSearch
 
 function onInit() {
     mapService.initMap()
@@ -70,7 +71,12 @@ function onGetLocs() {
 function onSearch(ev){
     if(ev) ev.preventDefault()
     const elInputSearch = document.querySelector('input[name=search]')
-    codeAddress(elInputSearch.value)
+    mapService.getAddressBySearchInput(elInputSearch.value).then(
+        res=> {const {lat,lng}=res
+        onPanTo(lat,lng)
+    }
+    )
+    // codeAddress(elInputSearch.value)
 
 }
 

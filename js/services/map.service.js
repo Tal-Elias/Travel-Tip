@@ -4,7 +4,8 @@ export const mapService = {
     initMap,
     addMarker,
     panTo,
-    getMap
+    getMap,
+    getAddressBySearchInput
 }
 
 
@@ -24,12 +25,14 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
         })
 }
 
-// function getAdress(adress){
+function getAddressBySearchInput(adress){
+    console.log('hi adress=',adress)
 // const locs =storageService.loadFromStorage('locationsDB') ||{}
 // if(locs[adress]) return Promise.resolve(locs[adress]) 
-// console.log('Getting from Network')
-// return axios.get('')
-// }
+console.log('Getting from Network')
+return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${adress}&key=AIzaSyBMZ1V7mYaThIm95gpB0Bgzqg9Zs53qPq8`)
+.then(res =>res.data.results[0].geometry.location)
+}
 
 function getMap(){
     return gMap
