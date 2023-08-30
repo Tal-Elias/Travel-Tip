@@ -26,16 +26,14 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
         })
 }
 
-function getAddressBySearchInput(adress){
-    console.log('hi adress=',adress)
-// const locs =storageService.loadFromStorage('locationsDB') ||{}
-// if(locs[adress]) return Promise.resolve(locs[adress]) 
-console.log('Getting from Network')
-return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${adress}&key=AIzaSyBMZ1V7mYaThIm95gpB0Bgzqg9Zs53qPq8`)
-.then(res =>res.data.results[0].geometry.location)
+function getAddressBySearchInput(adress) {
+    console.log('hi adress=', adress)
+    console.log('Getting from Network')
+    return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${adress}&key=AIzaSyBMZ1V7mYaThIm95gpB0Bgzqg9Zs53qPq8`)
+        .then(res => res.data.results[0].geometry.location)
 }
 
-function getMap(){
+function getMap() {
     return gMap
 }
 
@@ -52,7 +50,6 @@ function panTo(lat, lng) {
     var laLatLng = new google.maps.LatLng(lat, lng)
     gMap.panTo(laLatLng)
 }
-
 
 function _connectGoogleApi() {
     if (window.google) return Promise.resolve()
