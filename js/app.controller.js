@@ -98,4 +98,5 @@ function onPanTo(lat, lng) {
 function onRemoveLocation(id) {
     // console.log('id is:', id);
     locService.removeLocation(id)
+    onGetLocs()
 }
