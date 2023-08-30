@@ -11,24 +11,30 @@ function onInit() {
     mapService.initMap()
         .then(() => {
             console.log('Map is ready')
-            const map= getMap()
-            console.log(map);
+            const map= mapService.getMap()
+            console.log(map)
+             getInfoWindow(map)
             
         })
-        .catch(() => console.log('Error: cannot init map'))
+        .catch((err) => console.log(err,'Error: cannot init map'))
 }
 
 //infoWindow Function
-function getInfoWindow(){
+function getInfoWindow(map){
     // Create the initial InfoWindow.
   let infoWindow = new google.maps.InfoWindow({
     content: "Click the map to get Lat/Lng!",
-    position: myLatlng,
+    position: map.center,
   });
 
   infoWindow.open(map);
   // Configure the click listener.
   map.addListener("click", (mapsMouseEvent) => {
+    //add location name
+    const locationName= prompt('whats the location name?')
+    // if(!locationName){
+    //     createLocation(locationName,mapsMouseEvent.latLng)
+    // }
     // Close the current InfoWindow.
     infoWindow.close();
     // Create a new InfoWindow.
