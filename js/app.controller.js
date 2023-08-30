@@ -11,8 +11,35 @@ function onInit() {
     mapService.initMap()
         .then(() => {
             console.log('Map is ready')
+            const map= getMap()
+            console.log(map);
+            
         })
         .catch(() => console.log('Error: cannot init map'))
+}
+
+//infoWindow Function
+function getInfoWindow(){
+    // Create the initial InfoWindow.
+  let infoWindow = new google.maps.InfoWindow({
+    content: "Click the map to get Lat/Lng!",
+    position: myLatlng,
+  });
+
+  infoWindow.open(map);
+  // Configure the click listener.
+  map.addListener("click", (mapsMouseEvent) => {
+    // Close the current InfoWindow.
+    infoWindow.close();
+    // Create a new InfoWindow.
+    infoWindow = new google.maps.InfoWindow({
+      position: mapsMouseEvent.latLng,
+    })
+    infoWindow.setContent(
+      JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2),
+    )
+    infoWindow.open(map);
+  })
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
