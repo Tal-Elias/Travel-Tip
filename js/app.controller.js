@@ -11,42 +11,40 @@ function onInit() {
     mapService.initMap()
         .then(() => {
             console.log('Map is ready')
-            const map= mapService.getMap()
-            console.log(map)
-             getInfoWindow(map)
-            
+            const map = mapService.getMap()
+            getInfoWindow(map)
+
         })
-        .catch((err) => console.log(err,'Error: cannot init map'))
+        .catch((err) => console.log(err, 'Error: cannot init map'))
 }
 
 //infoWindow Function
-function getInfoWindow(map){
+function getInfoWindow(map) {
     // Create the initial InfoWindow.
-  let infoWindow = new google.maps.InfoWindow({
-    content: "Click the map to get Lat/Lng!",
-    position: map.center,
-  });
+    let infoWindow = new google.maps.InfoWindow({
+        content: "Click the map to get Lat/Lng!",
+        position: map.center,
+    });
 
-  infoWindow.open(map);
-  // Configure the click listener.
-  map.addListener("click", (mapsMouseEvent) => {
-    //add location name
-    const locationName= prompt('whats the location name?')
-    if(locationName){
-        console.log(locationName);
-        locService.createLocation(locationName,mapsMouseEvent.latLng)
-    }
-    // Close the current InfoWindow.
-    infoWindow.close();
-    // Create a new InfoWindow.
-    infoWindow = new google.maps.InfoWindow({
-      position: mapsMouseEvent.latLng,
-    })
-    infoWindow.setContent(
-      JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2),
-    )
     infoWindow.open(map);
-  })
+    // Configure the click listener.
+    map.addListener("click", (mapsMouseEvent) => {
+        //add location name
+        const locationName = prompt('whats the location name?')
+        if (locationName) {
+            locService.createLocation(locationName, mapsMouseEvent.latLng.toJSON())
+        }
+        // Close the current InfoWindow.
+        infoWindow.close();
+        // Create a new InfoWindow.
+        infoWindow = new google.maps.InfoWindow({
+            position: mapsMouseEvent.latLng,
+        })
+        infoWindow.setContent(
+            JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2),
+        )
+        infoWindow.open(map);
+    })
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -66,8 +64,21 @@ function onGetLocs() {
     locService.getLocs()
         .then(locs => {
             console.log('Locations:', locs)
-            document.querySelector('.locs').innerText = JSON.stringify(locs, null, 2)
+            // document.querySelector('.locs').innerText = JSON.stringify(locs, null, 2)
+            renderLocs(locs)
         })
+}
+
+function renderLocs(locs) {
+    console.log(locs);
+    const strHTMLs = locs.map(loc => `
+                <article>
+                    <h3>${loc.name}</h3>
+                    <button onclick="onPanTo(${loc.lat, loc.lng})">Go</button>
+                    <button onclick="onRemoveLocation(${loc.id})">Delete</button>
+                </article>
+        `)
+    document.querySelector('.card-container').innerHTML = strHTMLs.join('')
 }
 
 function onGetUserPos() {
@@ -81,7 +92,12 @@ function onGetUserPos() {
             console.log('err!!!', err)
         })
 }
-function onPanTo() {
+function onPanTo(lat, lng) {
     console.log('Panning the Map')
-    mapService.panTo(35.6895, 139.6917)
+    // mapService.panTo(35.6895, 139.6917)
+    mapService.panTo(lat, lng)
+}
+
+function onRemoveLocation(id) {
+
 }

@@ -1,34 +1,42 @@
-import { storageService } from '../services/storage.service'
-import { utilService } from '../services/util.storage'
+import { storageService } from '../services/storage.service.js'
+import { utilService } from '../services/util.service.js'
 
 export const locService = {
     getLocs,
     createLocation
 }
-const STORAGE_KEY='locationsDB'
-const locs = [
-    { name: 'Greatplace', lat: 32.047104, lng: 34.832384 }, 
+
+const STORAGE_KEY = 'locationsDB'
+
+const locs = storageService.loadFromStorage(STORAGE_KEY) || [
+    { name: 'Greatplace', lat: 32.047104, lng: 34.832384 },
     { name: 'Neveragain', lat: 32.047201, lng: 34.832581 }
 ]
-function createLocation(name,position){
-    const location={id:utilService.makeId(),
+
+function createLocation(name, position) {
+    const location = {
+        id: utilService.makeId(),
         name,
-        lat:position.lat,
-        lng:position.lng,
-        Weather:weather,
-        createdAt:Date.now(),
-        updatedAt:Date.now()
+        lat: position.lat,
+        lng: position.lng,
+        Weather: '',
+        createdAt: Date.now(),
+        updatedAt: Date.now()
     }
     locs.push(location)
-    storageService.saveToStorage(STORAGE_KEY,locs)
-
+    storageService.saveToStorage(STORAGE_KEY, locs)
 }
+
 function getLocs() {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve(locs)
         }, 2000)
     })
+}
+
+function removeLocation() {
+    
 }
 
 
