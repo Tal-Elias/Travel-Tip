@@ -8,14 +8,16 @@ window.onGetLocs = onGetLocs
 window.onGetUserPos = onGetUserPos
 window.onRemoveLocation = onRemoveLocation
 window.onSearch = onSearch
+window.onCreateLink = onCreateLink
 
 function onInit() {
-    mapService.initMap()
+    let loc = onFilterByQueryParams()
+    if (loc === undefined) loc = { lat: 32.0749831, lng: 34.9120554 }
+    mapService.initMap(loc.lat, loc.lng)
         .then(() => {
             console.log('Map is ready')
             const map = mapService.getMap()
             getInfoWindow(map)
-
         })
         .catch((err) => console.log(err, 'Error: cannot init map'))
 }
@@ -35,6 +37,7 @@ function getInfoWindow(map) {
         const locationName = prompt('whats the location name?')
         if (locationName) {
             locService.createLocation(locationName, mapsMouseEvent.latLng.toJSON())
+            locService.setCurrPosition(mapsMouseEvent.latLng.toJSON())
         }
         // Close the current InfoWindow.
         infoWindow.close();
@@ -75,26 +78,11 @@ function onSearch(ev) {
         res => {
             const { lat, lng } = res
             onPanTo(lat, lng)
+            locService.setCurrPosition({ lat, lng })
         }
     )
-    // codeAddress(elInputSearch.value)
-
 }
 
-function codeAddress(addressValue) {
-    const address = addressValue
-    geocoder.geocode({ 'address': address }, function (results, status) {
-        if (status == 'OK') {
-            map.setCenter(results[0].geometry.location);
-            var marker = new google.maps.Marker({
-                map: map,
-                position: results[0].geometry.location
-            })
-        } else {
-            alert('Geocode was not successful for the following reason: ' + status);
-        }
-    });
-}
 function renderLocs(locs) {
     const strHTMLs = locs.map(loc => `
                 <article>
@@ -143,4 +131,29 @@ function onRemoveLocation(id) {
             }, 1000)
         }
     })
+}
+
+function onGetCurrPosition() {
+    return locService.getCurrPosition()
+}
+
+function onCreateLink() {
+    const currPos = onGetCurrPosition()
+    console.log('currPos:', currPos);
+    const queryParams = `?lat=${currPos.lat}&lng=${currPos.lng}`
+    const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + queryParams
+    navigator.clipboard.writeText(newUrl)
+    alert('Link copied to clipboard!')
+}
+
+function onFilterByQueryParams() {
+    const queryParams = new URLSearchParams(window.location.search)
+    console.log(queryParams);
+    const filterBy = {
+        lat: +queryParams.get('lat'),
+        lng: +queryParams.get('lng')
+    }
+    if (filterBy.lat && filterBy.lng) return filterBy
+    else return
+    // return onPanTo(filterBy.lat, filterBy.lng)
 }

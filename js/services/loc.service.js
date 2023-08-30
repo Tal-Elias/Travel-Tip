@@ -4,10 +4,13 @@ import { utilService } from '../services/util.service.js'
 export const locService = {
     getLocs,
     createLocation,
-    removeLocation
+    removeLocation,
+    setCurrPosition,
+    getCurrPosition
 }
 
 const STORAGE_KEY = 'locationsDB'
+let gCurrPosition = null
 
 const gLocs = storageService.loadFromStorage(STORAGE_KEY) || [
     { name: 'Greatplace', lat: 32.047104, lng: 34.832384 },
@@ -44,8 +47,20 @@ function removeLocation(id) {
     })
 }
 
+function setCurrPosition(pos) {
+    gCurrPosition = pos
+}
+
+function getCurrPosition() {
+    return gCurrPosition
+}
+
+// function createLink() {
+//     return new Promise((res, rej) => {
+//         let link = 
+//     })
+// }
+
 function _saveLocsToStorage() {
     storageService.saveToStorage(STORAGE_KEY, gLocs)
 }
-
-
