@@ -1,5 +1,5 @@
-import { storageService } from '../services/storage.service'
-import { utilService } from '../services/util.storage'
+import { storageService } from '../services/storage.service.js'
+import { utilService } from '../services/util.storage.js'
 
 export const locService = {
     getLocs,
@@ -15,7 +15,7 @@ function createLocation(name,position){
         name,
         lat:position.lat,
         lng:position.lng,
-        Weather:weather,
+        Weather:'',
         createdAt:Date.now(),
         updatedAt:Date.now()
     }
