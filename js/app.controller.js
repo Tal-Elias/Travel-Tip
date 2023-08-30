@@ -34,7 +34,7 @@ function getInfoWindow(map){
     const locationName= prompt('whats the location name?')
     if(locationName){
         console.log(locationName);
-        createLocation(locationName,mapsMouseEvent.latLng)
+        locService.createLocation(locationName,mapsMouseEvent.latLng)
     }
     // Close the current InfoWindow.
     infoWindow.close();
