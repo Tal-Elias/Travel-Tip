@@ -36,26 +36,14 @@ form {
     margin-inline-end: 5em;
 }
 
-<<<<<<< HEAD
-.main-container {
-    background-color: lightgray;
-}
-
 .map-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    /* background-color: blueviolet; */
-    justify-items: center;
-=======
-.map-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
->>>>>>> fc3e6e51c07d92ddd9014440d14d3338632c4253
 }
 
 .buttons-container {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 .card-container {
@@ -93,6 +81,7 @@ form {
 .buttons-container {
     padding: 2em;
     background-color: rgb(151 255 158);
+    height: 2em;
 }
 
 .buttons-container button {
@@ -113,6 +102,10 @@ button:hover {
 .weather{
     background-color: rgb(234, 234, 234);
     text-align: center;
+    width: 100%;
+    text-align: center;
+    background: whitesmoke;
+    border: 2px solid black;
     
    
 }
