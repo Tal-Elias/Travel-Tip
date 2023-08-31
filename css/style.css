@@ -36,21 +36,9 @@ form {
     margin-inline-end: 5em;
 }
 
-<<<<<<< HEAD
-.main-container {
-    background-color: lightgray;
-}
-
 .map-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    /* background-color: blueviolet; */
-    justify-items: center;
-=======
-.map-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
->>>>>>> fc3e6e51c07d92ddd9014440d14d3338632c4253
 }
 
 .buttons-container {
@@ -86,8 +74,13 @@ form {
 }
 
 .weather {
-    width: 300px;
-    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(151, 255, 158, 0.219);
+    text-align: center;
 }
 
 .buttons-container {
@@ -109,16 +102,4 @@ form {
 
 button:hover {
     background-color: #2980b9;
-}
-.weather{
-    background-color: rgb(234, 234, 234);
-    text-align: center;
-    
-   
-}
-.weather-card{
-   padding: 10px;
-    border: 2px black ridge;
-   
-    
 }
